@@ -17,3 +17,27 @@ passwordForm.addEventListener('submit', (e) => {
   document.getElementById('password').value = '';
 });
 
+viewPasswordsButton.addEventListener('click', () => {
+  const storedEncryptedPasswords = localStorage.getItem('encryptedPasswords');
+  if (storedEncryptedPasswords) {
+    encryptedPasswords = JSON.parse(storedEncryptedPasswords);
+    const passwordsHtml = Object.keys(encryptedPasswords).map((name) => {
+      const encryptedPassword = encryptedPasswords[name];
+      const decryptedPassword = CryptoJS.AES.decrypt(encryptedPassword, passwordKey).toString(CryptoJS.enc.Utf8);
+      return `
+        <div class="password">
+          <span class="password-name">${name}</span>
+          <span class="password-value">${decryptedPassword}</span>
+        </div>
+      `;
+    }).join('');
+    passwordsContainer.innerHTML = passwordsHtml;
+  } else {
+    passwordsContainer.innerHTML = '<p>No passwords stored.</p>';
+  }
+});
+
+const storedEncryptedPasswords = localStorage.getItem('encryptedPasswords');
+if (storedEncryptedPasswords) {
+  encryptedPasswords = JSON.parse(storedEncryptedPasswords);
+}
