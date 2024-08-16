@@ -1,6 +1,15 @@
+@font-face {
+    font-family: 'dcl';
+    src: url(dcl.ttf);
+}
+
 body {
-font-family: Arial, sans-serif;
+font-family: 'dcl', Arial, sans-serif;
 margin: 20px;
+max-width: 400px;
+margin-left: auto;
+margin-right: auto;
+font-size: larger;
 }
 
 form {
@@ -19,20 +28,45 @@ margin-bottom: 20px;
 padding: 10px;
 border: 1px solid #ccc;
 border-radius: 5px;
+max-width: 380px;
+margin-left: auto;
+margin-right: auto;
 }
 
 button {
 width: 100%;
-height: 30px;
+height: 50px;
 background-color: #4CAF50;
 color: #fff;
-padding: 10px;
+padding: 15px;
 border: none;
 border-radius: 5px;
 cursor: pointer;
+font-size: medium;
+font-family: 'dcl', Arial, sans-serif;
+
 }
 
 button:hover {
 background-color: #3e8e41;
 }
 
+#passwords-container {
+margin-top: 20px;
+}
+
+.password {
+margin-bottom: 10px;
+padding: 10px;
+border: 1px solid #ccc;
+border-radius: 5px;
+background-color: #f9f9f9;
+}
+
+.password-name {
+font-weight: bold;
+}
+
+.password-value {
+color: #666;
+}
