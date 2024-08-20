@@ -8,7 +8,6 @@ const decryptPasswordButton = document.getElementById('decrypt-password-button')
 const passwordKey = 'mysecretpassword';
 const encryptedPasswords = {};
 
-
 function saveEncryptedPasswordsToFile() {
   const encryptedPasswordsString = JSON.stringify(encryptedPasswords);
   const blob = new Blob([encryptedPasswordsString], { type: 'application/json' });
@@ -18,7 +17,6 @@ function saveEncryptedPasswordsToFile() {
   a.download = 'encrypted_passwords.json';
   a.click();
 }
-
 
 function loadEncryptedPasswordsFromFile(file) {
   const reader = new FileReader();
@@ -50,7 +48,8 @@ viewPasswordsButton.addEventListener('click', () => {
     const passwordsHtml = Object.keys(encryptedPasswords).map((name) => {
       return `
         <div class="password">
-          <span class="password-name">${name}</span>
+          <span class="password-name" onclick="decryptPassword('` + name + `')">` + name + `</span>
+          <input type="text" id="` + name + `-decrypted-password" style="display: none;">
         </div>
       `;
     }).join('');
@@ -58,6 +57,14 @@ viewPasswordsButton.addEventListener('click', () => {
   });
   input.click();
 });
+
+function decryptPassword(passwordName) {
+  const encryptedPassword = encryptedPasswords[passwordName];
+  const decryptedPassword = CryptoJS.AES.decrypt(encryptedPassword, passwordKey).toString(CryptoJS.enc.Utf8);
+  const decryptedPasswordInput = document.getElementById(passwordName + '-decrypted-password');
+  decryptedPasswordInput.value = decryptedPassword;
+  decryptedPasswordInput.style.display = 'block';
+}
 
 decryptPasswordButton.addEventListener('click', () => {
   const passwordName = decryptPasswordInput.value;
